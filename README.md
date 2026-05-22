@@ -47,7 +47,8 @@
 
 ## 🖥️ Screenshot
 
-> *(Tambahkan screenshot di sini)*
+> *<img width="1343" height="663" alt="image" src="https://github.com/user-attachments/assets/89a54c50-e811-4617-9623-bcc5a81f43b8" />
+*
 
 ---
 
