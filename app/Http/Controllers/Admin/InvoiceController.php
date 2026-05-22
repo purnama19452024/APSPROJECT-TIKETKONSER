@@ -15,9 +15,15 @@ use PhpOffice\PhpWord\PhpWord;
 
 class InvoiceController extends Controller
 {
-    public function index(): ViewView
+    public function index(Request $request): ViewView
     {
-        $invoices = Invoice::latest()->paginate(15);
+        $query = Invoice::latest();
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        $invoices = $query->paginate(15);
 
         return view('admin.invoices.index', compact('invoices'));
     }

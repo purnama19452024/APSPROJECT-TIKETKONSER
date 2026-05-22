@@ -45,6 +45,7 @@
                                 <span class="text-xs px-2 py-1 rounded-full font-medium
                                     @if($booking->status === 'confirmed') bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400
                                     @elseif($booking->status === 'cancelled') bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400
+                                    @elseif($booking->status === 'expired') bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400
                                     @else bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 @endif">
                                     {{ ucfirst($booking->status) }}
                                 </span>
@@ -55,6 +56,11 @@
                                     <form action="{{ route('admin.bookings.confirm', $booking) }}" method="POST" class="inline ml-2">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="text-green-600 hover:text-green-700 text-sm font-medium">Confirm</button>
+                                    </form>
+                                @elseif ($booking->status === 'confirmed')
+                                    <form action="{{ route('admin.bookings.cancel', $booking) }}" method="POST" class="inline ml-2">
+                                        @csrf @method('PATCH')
+                                        <button type="submit" class="text-red-500 hover:text-red-600 text-sm font-medium">Cancel</button>
                                     </form>
                                 @endif
                             </td>

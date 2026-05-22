@@ -24,6 +24,7 @@
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Date</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Venue</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Price</th>
+                        <th class="text-left px-4 py-3 font-medium text-gray-500">Ticket Expiry</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Seats</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Status</th>
                         <th class="text-right px-4 py-3 font-medium text-gray-500">Actions</th>
@@ -46,6 +47,15 @@
                             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $concert->date->format('d M Y') }}</td>
                             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $concert->venue }}, {{ $concert->city }}</td>
                             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">Rp {{ number_format($concert->price, 0, ',', '.') }}</td>
+                            <td class="px-4 py-3">
+                                @if ($concert->ticket_expiry)
+                                    <span class="text-xs {{ now()->greaterThan($concert->ticket_expiry) ? 'text-red-500 dark:text-red-400' : 'text-gray-600 dark:text-gray-400' }}">
+                                        {{ $concert->ticket_expiry->format('d M Y H:i') }}
+                                    </span>
+                                @else
+                                    <span class="text-xs text-gray-400">-</span>
+                                @endif
+                            </td>
                             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $concert->available_seats }}</td>
                             <td class="px-4 py-3">
                                 <span class="text-xs px-2 py-1 rounded-full font-medium {{ $concert->status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-100 text-gray-500 dark:bg-gray-800' }}">

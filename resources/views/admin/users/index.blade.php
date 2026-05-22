@@ -25,7 +25,6 @@
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Email</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Role</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Bookings</th>
-                        <th class="text-right px-4 py-3 font-medium text-gray-500">Balance</th>
                         <th class="text-left px-4 py-3 font-medium text-gray-500">Joined</th>
                         <th class="text-right px-4 py-3 font-medium text-gray-500">Actions</th>
                     </tr>
@@ -51,7 +50,6 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $user->bookings_count }}</td>
-                            <td class="px-4 py-3 text-right font-medium text-gray-900 dark:text-white">Rp {{ number_format($user->balance, 0, ',', '.') }}</td>
                             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $user->created_at->format('d M Y') }}</td>
                             <td class="px-4 py-3 text-right">
                                 <a href="{{ route('admin.users.show', $user) }}" class="text-blue-600 hover:text-blue-700 text-sm font-medium mr-2">Detail</a>

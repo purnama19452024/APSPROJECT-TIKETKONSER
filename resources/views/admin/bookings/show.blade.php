@@ -20,6 +20,7 @@
                     <span class="text-xs px-2 py-1 rounded-full font-medium
                         @if($booking->status === 'confirmed') bg-green-100 text-green-700
                         @elseif($booking->status === 'cancelled') bg-red-100 text-red-700
+                        @elseif($booking->status === 'expired') bg-gray-100 text-gray-500
                         @else bg-yellow-100 text-yellow-700 @endif">
                         {{ ucfirst($booking->status) }}
                     </span>
@@ -65,7 +66,19 @@
                 <dt class="text-sm text-gray-500">Email</dt>
                 <dd class="text-sm text-gray-900 dark:text-white">{{ $booking->user?->email ?? 'N/A' }}</dd>
             </div>
+            <div class="flex justify-between">
+                <dt class="text-sm text-gray-500">User Balance</dt>
+                <dd class="text-sm font-semibold {{ $booking->user && $booking->user->balance >= $booking->total_price ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                    Rp {{ number_format($booking->user?->balance ?? 0, 0, ',', '.') }}
+                </dd>
+            </div>
         </dl>
+        @if ($booking->user && $booking->user->balance < $booking->total_price)
+            <div class="mt-4 p-3 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800">
+                <p class="text-sm text-red-700 dark:text-red-300 font-medium">Saldo tidak mencukupi. Mohon top up terlebih dahulu.</p>
+                <a href="{{ route('admin.users.show', $booking->user) }}" class="mt-2 inline-block text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium">Top Up Now &rarr;</a>
+            </div>
+        @endif
     </div>
 
     <div class="md:col-span-2 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
@@ -127,6 +140,11 @@
             @csrf @method('PATCH')
             <button type="submit" class="px-6 py-2.5 rounded-lg text-sm font-semibold text-white bg-green-600 hover:bg-green-700 transition">Confirm Booking</button>
         </form>
+        <form action="{{ route('admin.bookings.cancel', $booking) }}" method="POST">
+            @csrf @method('PATCH')
+            <button type="submit" class="px-6 py-2.5 rounded-lg text-sm font-semibold text-white bg-red-600 hover:bg-red-700 transition">Cancel Booking</button>
+        </form>
+    @elseif ($booking->status === 'confirmed')
         <form action="{{ route('admin.bookings.cancel', $booking) }}" method="POST">
             @csrf @method('PATCH')
             <button type="submit" class="px-6 py-2.5 rounded-lg text-sm font-semibold text-white bg-red-600 hover:bg-red-700 transition">Cancel Booking</button>

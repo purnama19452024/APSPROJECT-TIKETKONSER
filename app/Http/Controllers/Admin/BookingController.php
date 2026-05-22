@@ -26,12 +26,20 @@ class BookingController extends Controller
 
     public function confirm(Booking $booking)
     {
+        if ($booking->status !== 'pending') {
+            return back()->withErrors(['status' => 'Only pending bookings can be confirmed.']);
+        }
+
+        if ($booking->user->balance < $booking->total_price) {
+            return back()->withErrors(['balance' => 'Saldo user tidak mencukupi. Mohon top up terlebih dahulu.']);
+        }
+
         $booking->update([
             'status' => 'confirmed',
             'payment_status' => 'paid',
         ]);
 
-        $booking->user->increment('balance', $booking->total_price);
+        $booking->user->decrement('balance', $booking->total_price);
         $booking->user->notify(new BookingConfirmed($booking));
 
         $timestamp = now()->format('ymdHis');
@@ -45,14 +53,20 @@ class BookingController extends Controller
             'reference_id' => $booking->id,
         ]);
 
-        return back()->with('success', 'Booking berhasil dikonfirmasi! Invoice created.');
+        return back()->with('success', 'Booking berhasil dikonfirmasi! Saldo user telah dipotong.');
     }
 
     public function cancel(Booking $booking)
     {
+        $wasConfirmed = $booking->status === 'confirmed';
+
         $booking->update(['status' => 'cancelled']);
 
         $booking->concert()->increment('available_seats', $booking->quantity);
+
+        if ($wasConfirmed) {
+            $booking->user->increment('balance', $booking->total_price);
+        }
 
         return back()->with('success', 'Booking berhasil dibatalkan!');
     }

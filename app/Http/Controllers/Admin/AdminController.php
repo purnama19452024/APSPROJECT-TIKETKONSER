@@ -19,14 +19,16 @@ class AdminController extends Controller
         $activeConcerts = Concert::where('status', 'active')->count();
         $totalBookings = Booking::count();
         $totalUsers = User::count();
-        $totalRevenue = Invoice::where('type', 'incoming')->sum('amount') - Invoice::where('type', 'outgoing')->sum('amount');
+        $moneyIn = Invoice::where('type', 'incoming')->sum('amount');
+        $moneyOut = Invoice::where('type', 'outgoing')->sum('amount');
+        $totalRevenue = $moneyIn - $moneyOut;
         $confirmedRevenue = Booking::where('status', 'confirmed')->sum('total_price');
         $recentBookings = Booking::with(['user', 'concert'])->latest()->take(5)->get();
         $upcomingConcerts = Concert::where('date', '>=', now())->orderBy('date')->take(5)->get();
 
         return view('admin.dashboard', compact(
             'totalConcerts', 'activeConcerts', 'totalBookings',
-            'totalUsers', 'totalRevenue', 'confirmedRevenue', 'recentBookings', 'upcomingConcerts', 'user'
+            'totalUsers', 'moneyIn', 'moneyOut', 'totalRevenue', 'confirmedRevenue', 'recentBookings', 'upcomingConcerts', 'user'
         ));
     }
 }

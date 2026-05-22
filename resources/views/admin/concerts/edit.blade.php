@@ -39,6 +39,12 @@
                 <input type="time" name="time" value="{{ old('time', $concert->time->format('H:i')) }}" required class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 @error('time') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ticket Expiry</label>
+                <input type="datetime-local" name="ticket_expiry" value="{{ old('ticket_expiry', $concert->ticket_expiry?->format('Y-m-d\TH:i')) }}" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                @error('ticket_expiry') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                <p class="text-xs text-gray-500 mt-1">After this date/time, ticket sales close. Leave empty for no limit.</p>
+            </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">

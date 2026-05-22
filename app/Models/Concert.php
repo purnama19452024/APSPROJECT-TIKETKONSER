@@ -8,7 +8,7 @@ class Concert extends Model
 {
     protected $fillable = [
         'title', 'artist', 'description', 'date', 'time',
-        'venue', 'city', 'price', 'available_seats', 'image', 'status',
+        'venue', 'city', 'price', 'available_seats', 'image', 'status', 'ticket_expiry',
     ];
 
     protected function casts(): array
@@ -17,6 +17,7 @@ class Concert extends Model
             'date' => 'date',
             'time' => 'datetime:H:i',
             'price' => 'decimal:2',
+            'ticket_expiry' => 'datetime',
         ];
     }
 

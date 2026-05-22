@@ -6,7 +6,7 @@
     <p class="text-gray-500 dark:text-gray-400 mt-1">Welcome, <span class="capitalize text-blue-400">{{ $user->role }}</span> — {{ $user->name }}.</p>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
     <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
         <div class="flex items-center justify-between mb-3">
             <span class="text-sm font-medium text-gray-500">Total Concerts</span>
@@ -27,25 +27,35 @@
         <div class="text-3xl font-bold text-gray-900 dark:text-white">{{ $totalBookings }}</div>
         <div class="text-sm text-gray-500 mt-1">Total bookings</div>
     </div>
+    <a href="{{ route('admin.invoices.index', ['type' => 'incoming']) }}" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 hover:border-green-500/50 transition group">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-sm font-medium text-gray-500">Uang Masuk</span>
+            <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 group-hover:scale-110 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125V9M7.5 12h.75M12 12h.75M16.5 12h.75m0 0a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75h.75zm-3.75 0a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75h.75zm-3.75 0a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75h.75z"/></svg>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-green-600 dark:text-green-400">Rp {{ number_format($moneyIn, 0, ',', '.') }}</div>
+        <div class="text-sm text-gray-500 mt-1">Top-up + ticket payments</div>
+    </a>
+    <a href="{{ route('admin.invoices.index', ['type' => 'outgoing']) }}" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 hover:border-red-500/50 transition group">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-sm font-medium text-gray-500">Uang Keluar</span>
+            <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 group-hover:scale-110 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125V9M7.5 12h.75M12 12h.75M16.5 12h.75m0 0a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75h.75zm-3.75 0a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75h.75zm-3.75 0a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75h.75z"/></svg>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-red-600 dark:text-red-400">Rp {{ number_format($moneyOut, 0, ',', '.') }}</div>
+        <div class="text-sm text-gray-500 mt-1">Withdrawals</div>
+    </a>
     <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
         <div class="flex items-center justify-between mb-3">
             <span class="text-sm font-medium text-gray-500">Total Revenue</span>
-            <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-        </div>
-        <div class="text-3xl font-bold text-gray-900 dark:text-white">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
-        <div class="text-sm text-gray-500 mt-1">All incoming (booking + top-up)</div>
-    </div>
-    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
-        <div class="flex items-center justify-between mb-3">
-            <span class="text-sm font-medium text-gray-500">Confirmed Revenue</span>
             <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
             </div>
         </div>
-        <div class="text-3xl font-bold text-gray-900 dark:text-white">Rp {{ number_format($confirmedRevenue, 0, ',', '.') }}</div>
-        <div class="text-sm text-gray-500 mt-1">From confirmed bookings</div>
+        <div class="text-3xl font-bold text-gray-900 dark:text-white">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
+        <div class="text-sm text-gray-500 mt-1">Net (in - out)</div>
     </div>
     <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
         <div class="flex items-center justify-between mb-3">
@@ -108,10 +118,11 @@
                             <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $booking->concert?->title ?? 'N/A' }}</span>
                             <span class="text-xs text-gray-500 block">{{ $booking->user?->name }} · {{ $booking->quantity }} tiket</span>
                         </div>
-                        <span class="text-xs px-2 py-1 rounded-full font-medium
-                            @if($booking->status === 'confirmed') bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400
-                            @elseif($booking->status === 'cancelled') bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400
-                            @else bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 @endif">
+                            <span class="text-xs px-2 py-1 rounded-full font-medium
+                                    @if($booking->status === 'confirmed') bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400
+                                    @elseif($booking->status === 'cancelled') bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400
+                                    @elseif($booking->status === 'expired') bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400
+                                    @else bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 @endif">
                             {{ ucfirst($booking->status) }}
                         </span>
                     </div>
